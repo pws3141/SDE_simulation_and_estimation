@@ -35,11 +35,11 @@ library(ltsa)
         # x is single observation from multivariate Gaussian
         # S.int is .sigmaOUIntegratedMatrix
         U.chol <- chol(S.int)
-        detS <- prod(diag(U.chol))^2
+        log_detS <- 2 * sum(log(diag(U.chol)))
         r2 <- sum(backsolve(U.chol, x, transpose = TRUE) ^ 2)
         #r1 <- t(x) %*% solve(A, x)
         #print(abs(r1 - r2)) # should be zero
-        ll <- -0.5 * log(detS) - 0.5 * r2
+        ll <- -0.5 * log_detS - 0.5 * r2
         names(ll) <- "ll"
         ll
 }
